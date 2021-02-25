@@ -16,23 +16,45 @@ const ranks = [
 ];
 const suits = ["♠", "♣", "♥", "♦"];
 
+//Card
 class Card {
     constructor(ranks, suits,isJoker = false) {
         this.ranks = ranks;
-      
         this.suits = suits;
         this.isJoker = isJoker;
     }
+    getName() {   
+         return `${this.ranks} ${this.suits}`;   }
 }
 
+function createCards(){
+    let deck = new Array() ;
+    let cards
+        for(let i = 0; i < suits.length; i++ ){
+            for(let x = 0; x < ranks.length; x++){
+                if(x < 10) {
+                    cards= new Card(ranks[x], x + 1, suits[i]);
+                    deck.push(cards);
+                }else{
+                    cards=new Card(ranks[x], 10, suits[i]);
+                    deck.push(cards);
+                }
+            }
+        }
+        deck.push(new Card(null,0,null, true ));
+        deck.push(new Card(null, 0, null, true ));
+        return deck;
+    }
+
+
+//Player
 class Player {
-    constructor(name, score, playersDeck) {
+    constructor(name, score = 0, playersDeck) {
         this.name = name;
         this.playersDeck = playersDeck;
         this.score = score;
     }
         calcHandScore() {
-            let score = 0;
             for(cards of deck) {
                 if(card.value === "joker") {
                     score += 0;
@@ -52,76 +74,60 @@ let player2 = new Player("Eliav");
 let player3 = new Player("Daniel");
 let player4 = new Player("Nitzan");
 
-let deck = new Array() ;
-let cards
-function createCards(){
-    for(let i = 0; i < suits.length; i++ ){
-        for(let x = 0; x < ranks.length; x++){
-            if(x < 10) {
-                cards= new Card(ranks[x], x + 1, suits[i]);
-                deck.push(cards);
-            }else{
-                cards=new Card(ranks[x], 10, suits[i]);
-                deck.push(cards);
-            }
-        }
+
+
+//Deck
+class Deck{
+    constructor() {   
+        this.cards = [];
     }
-    deck.push(new Card(null,0,null, true ));
-    deck.push(new Card(null, 0, null, true ));
-    return deck;
+    addCard(...card) {
+        this.cards.push(...card)
+    }
+    useCard() {
+        return this.cards.shift();
+    }
+}
+
+//PlayersDeck
+ class playersDeck extends Deck{
+     constructor(){
+         super();
+         this.hand = []; 
+     }
+    }
+ 
+//TableDeck
+ class TableDeck extends Deck{
+    constructor(){
+        super();
+    }
+
+randomCards() {
+    let array = this.cards;
+    for (let i = array.length ; i>0 ; i--) {
+        let j = Math.floor(Math.random() * (i +1));
+        [array[i], array[j]] = [array[j], array[i]]
+    }
+    return array;
+}
+ }
+
+ //PileDeck
+ class PileDeck extends Deck{
+    constructor(){
+        super();
+        this.pile = [];  
+    }
 }
  
+//Controller
+class Controller { 
+    }
+
 console.log(createCards())
-//      //DOWN
-class Deck{
-    constructor() {
-        shuffle(){
-        }
-    }
-}
-// //DOWN 1 UP
-//  class playersDeck extends Deck{
-//      constructor(){
-//          super();
-         
-//      }
-
-//  }
-// //UP
-//  class TableDeck extends Deck{
-
-//     contructor(){
-//         super();
-        
-//     }
-//  }
-// //UP
-//  class PileDeck extends Deck{
-//     contructor(){
-//         super();
-        
-//     }
-
-//  }
-
-class Controller {
-    initDeck(deck){
-        for(suit of suits){
-            for(rank of ranks){
-                deck.insertCards(new Card(null,rank,suit));
-                if (deck.length === 52){
-                    deck.insertCards(new Card(true))
-                    deck.insertCards(new Card(true))
-                }
-            }
-        }
-    }
-}
-const deck = new Deck();
 
 
-function randomCard(){ return deck[Math.floor(Math.random() * deck.length)]};
-console.log(randomCard());
 
 
 
