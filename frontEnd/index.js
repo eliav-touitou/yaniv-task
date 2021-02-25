@@ -28,25 +28,20 @@ class Card {
 }
 
 function createCards(){
-    let deck = new Array() ;
-    let cards
         for(let i = 0; i < suits.length; i++ ){
             for(let x = 0; x < ranks.length; x++){
                 if(x < 10) {
-                    cards= new Card(ranks[x], x + 1, suits[i]);
-                    deck.push(cards);
+                    this.cards.push( new Card(ranks[x], x + 1, suits[i]));
                 }else{
-                    cards=new Card(ranks[x], 10, suits[i]);
-                    deck.push(cards);
+                    this.cards.push(new Card(ranks[x], 10, suits[i]));
                 }
             }
         }
-        deck.push(new Card(null,0,null, true ));
-        deck.push(new Card(null, 0, null, true ));
-        return deck;
+        cards.push(new Card(null,0,null, true ));
+        cards.push(new Card(null, 0, null, true ));
+        return cards;
     }
-
-
+    
 //Player
 class Player {
     constructor(name, score = 0, playersDeck) {
@@ -68,14 +63,6 @@ class Player {
         }
     }
 
-
-let player1 = new Player("Shira");
-let player2 = new Player("Eliav");
-let player3 = new Player("Daniel");
-let player4 = new Player("Nitzan");
-
-
-
 //Deck
 class Deck{
     constructor() {   
@@ -87,47 +74,60 @@ class Deck{
     useCard() {
         return this.cards.shift();
     }
+    randomCards() {
+        let location1, location2, tmp;
+        for (let i = 0; i>1000 ; i++) {
+            location1 = Math.floor((Math.random() * this.cards.length));
+           location2 = Math.floor((Math.random() * this.cards.length));
+           tmp = this.cards[location1];
+           this.cards[location1] = this.cards[location2];
+           this.cards[location2] = tmp;
+        }
+    }
 }
+//new deck instance 
+// const d = new Deck();
+// d.createCards();
+// console.log(d.cards);
 
 //PlayersDeck
  class playersDeck extends Deck{
      constructor(){
-         super();
-         this.hand = []; 
+         this.players = [];
+        }
+    start(player1, player2, player3,player4) {
+        this.players.push(new Player(player1));
+        this.players.push(new Player(player2));
+        this.players.push(new Player(player3));
+        this.players.push(new Player(player4));
+        let d = new Deck();
+        d.createCards();
+        d.randomCards();
+        this.players[0].playerCards = d.cards.slice(0,5);
+        this.players[1].playerCards = d.cards.slice(5,10);
+        this.players[2].playerCards = d.cards.slice(10,15);
+        this.players[3].playerCards = d.cards.slice(15,20); 
      }
     }
  
 //TableDeck
  class TableDeck extends Deck{
     constructor(){
-        super();
-    }
-
-randomCards() {
-    let array = this.cards;
-    for (let i = array.length ; i>0 ; i--) {
-        let j = Math.floor(Math.random() * (i +1));
-        [array[i], array[j]] = [array[j], array[i]]
-    }
-    return array;
+        this.cardsInMiddle = [];
+       
 }
  }
 
- //PileDeck
- class PileDeck extends Deck{
-    constructor(){
-        super();
-        this.pile = [];  
-    }
-}
  
-//Controller
-class Controller { 
-    }
 
+//  //PileDeck
+//  class PileDeck extends Deck{
+//     constructor(){
+//         super();
+//         this.pile = [];  
+//     }
+// }
+ 
+
+randomCards(createCards)
 console.log(createCards())
-
-
-
-
-
