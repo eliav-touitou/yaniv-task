@@ -68,27 +68,26 @@ class Deck{
          this.cards.push(new Card(null, 0, null, true ));
      }
 
+    randomCards() {
+        for (let i = 0; i>this.cards.length ; i++) {
+           let random = Math.floor((Math.random() * i));
+           let tmp = this.cards[location1];
+           this.cards[i] = this.cards[random];
+           this.cards[random] = tmp;
+        }
+    }
     addCard(...card) {
         this.cards.push(...card)
     }
     useCard() {
         return this.cards.shift();
     }
-    randomCards() {
-        let location1, location2, tmp;
-        for (let i = 0; i>1000 ; i++) {
-            location1 = Math.floor((Math.random() * this.cards.length));
-           location2 = Math.floor((Math.random() * this.cards.length));
-           tmp = this.cards[location1];
-           this.cards[location1] = this.cards[location2];
-           this.cards[location2] = tmp;
-        }
-    }
+    
 }
 //a new Deck
 const d = new Deck();
 d.createCards()
-console.log(d.cards)
+console.log(d)
 
 //PlayersDeck
  class playersDeck extends Deck{
@@ -103,28 +102,41 @@ console.log(d.cards)
         // let d = new Deck();
         // d.createCards();
         // d.randomCards();
-        this.players[0].playerCards = d.cards.slice(0,5);
-        this.players[1].playerCards = d.cards.slice(5,10);
-        this.players[2].playerCards = d.cards.slice(10,15);
-        this.players[3].playerCards = d.cards.slice(15,20); 
+        this.players[0].playerCards = d.slice(0,5);
+        this.players[1].playerCards = d.slice(5,10);
+        this.players[2].playerCards = d.slice(10,15);
+        this.players[3].playerCards = d.slice(15,20); 
      }
     }
  
 //TableDeck
  class TableDeck extends Deck{
     constructor(){
-        this.cardsInMiddle = [];
-       
+       super();  
+}
+takeFromPile (pileDeck, cardLocation ) {
+let set = pileDeck.usePile();
+let setLast = Math.abs(set.length -1 - cardLocation);
+if(set.length > 1) {
+    this.addCard(set[cardLocation]);
+    pileDeck.addPile(set[setLast]);
+}
 }
  }
 
-//  //PileDeck
-//  class PileDeck extends Deck{
-//     constructor(){
-//         super();
-//         this.pile = [];  
-//     }
-// }
+ //PileDeck
+ class PileDeck extends Deck{
+    constructor(){
+        super();
+        this.pile = [];
+    }
+    addPile(set) {
+        this.pile.unshift(set)
+    }
+    usePile() {
+        return this.pile.shift();
+    }
+}
  
 
 
