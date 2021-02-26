@@ -24,24 +24,10 @@ class Card {
         this.isJoker = isJoker;
     }
     getName() {   
-         return `${this.ranks} ${this.suits}`;   }
+         return `${this.ranks} ${this.suits}`; 
+          }
 }
-
-function createCards(){
-        for(let i = 0; i < suits.length; i++ ){
-            for(let x = 0; x < ranks.length; x++){
-                if(x < 10) {
-                    this.cards.push( new Card(ranks[x], x + 1, suits[i]));
-                }else{
-                    this.cards.push(new Card(ranks[x], 10, suits[i]));
-                }
-            }
-        }
-        cards.push(new Card(null,0,null, true ));
-        cards.push(new Card(null, 0, null, true ));
-        return cards;
-    }
-    
+     
 //Player
 class Player {
     constructor(name, score = 0, playersDeck) {
@@ -66,8 +52,22 @@ class Player {
 //Deck
 class Deck{
     constructor() {   
-        this.cards = [];
+     this.cards = [];
     }
+    createCards(){
+         for(let i = 0; i < suits.length; i++ ){
+             for(let x = 0; x < ranks.length; x++){
+                 if(x < 10) {
+                     this.cards.push( new Card(ranks[x], x + 1, suits[i]));
+                 }else{
+                     this.cards.push(new Card(ranks[x], 10, suits[i]));
+                 }
+             }
+         }
+         this.cards.push(new Card(null,0,null, true ));
+         this.cards.push(new Card(null, 0, null, true ));
+     }
+
     addCard(...card) {
         this.cards.push(...card)
     }
@@ -85,10 +85,10 @@ class Deck{
         }
     }
 }
-//new deck instance 
-// const d = new Deck();
-// d.createCards();
-// console.log(d.cards);
+//a new Deck
+const d = new Deck();
+d.createCards()
+console.log(d.cards)
 
 //PlayersDeck
  class playersDeck extends Deck{
@@ -100,9 +100,9 @@ class Deck{
         this.players.push(new Player(player2));
         this.players.push(new Player(player3));
         this.players.push(new Player(player4));
-        let d = new Deck();
-        d.createCards();
-        d.randomCards();
+        // let d = new Deck();
+        // d.createCards();
+        // d.randomCards();
         this.players[0].playerCards = d.cards.slice(0,5);
         this.players[1].playerCards = d.cards.slice(5,10);
         this.players[2].playerCards = d.cards.slice(10,15);
@@ -118,8 +118,6 @@ class Deck{
 }
  }
 
- 
-
 //  //PileDeck
 //  class PileDeck extends Deck{
 //     constructor(){
@@ -129,5 +127,4 @@ class Deck{
 // }
  
 
-randomCards(createCards)
-console.log(createCards())
+
