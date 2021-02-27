@@ -29,7 +29,7 @@ class Card {
 
 //Player
 class Player {
-  constructor(name, number, score = 0, deck) {
+  constructor(name, number, deck, score = 0) {
     this.name = name;
     this.number = number;
     this.deck = deck;
@@ -55,8 +55,8 @@ class Player {
 
 //Deck
 class Deck {
-  constructor() {
-    this.cards = [];
+  constructor(cards = []) {
+    this.cards = cards;
   }
   pickCard() {
     return deck.cards[0];
@@ -93,7 +93,9 @@ class Deck {
 
 //PlayersDeck
 class playersDeck extends Deck {
-  constructor() {}
+  constructor() {
+    super();
+  }
 
   deal1Card(deck) {
     this.cards.push(this.pickCard(deck));
