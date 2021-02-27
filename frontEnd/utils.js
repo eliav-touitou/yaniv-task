@@ -29,10 +29,10 @@ class Card {
 
 //Player
 class Player {
-  constructor(name, number, score = 0, playersDeck) {
+  constructor(name, number, score = 0, deck) {
     this.name = name;
     this.number = number;
-    this.playersDeck = playersDeck;
+    this.deck = deck;
     this.score = score;
   }
   calcHandScore() {
@@ -137,17 +137,19 @@ class PileDeck extends Deck {
   }
 }
 
-function createGame(players, tableDeck) {
+function printGame(players, tableDeck) {
   for (let player of players) {
-    let playerElement = document.getElementsByClassName(
-      `player-${player.number}`
-    );
+    let playerElement = document.querySelector(`.player-${player.number}`);
     printPlayer(player, playerElement);
   }
-  let deckElement = document.createElement("div");
-  deckElement.classList.add("table-deck");
-  deckElement.innerText = tableDeck.length;
-  document.body.append(deckElement);
+  let tablePileElement = document.createElement("div");
+  tablePileElement.classList.add("table-pile");
+  let board = document.querySelector(".board");
+  board.append(tablePileElement);
+
+  for (let card of tableDeck) {
+    tablePileElement.append(printCard(card));
+  }
 }
 function printCard(card) {
   let cardElement = document.createElement("div");
