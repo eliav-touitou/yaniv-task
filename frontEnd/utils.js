@@ -165,3 +165,12 @@ function printCard(card) {
 
   return cardElement;
 }
+function printPlayer(player, playerElement) {
+  for (let card of player.deck) {
+    playerElement.append(printCard(card));
+  }
+  let pointsElement = document.createElement("div");
+  pointsElement.className = "player-points";
+  pointsElement.innerText = player.calcHandScore();
+  playerElement.append(pointsElement);
+}
