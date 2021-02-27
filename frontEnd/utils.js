@@ -139,11 +139,29 @@ class PileDeck extends Deck {
 
 function createGame(players, tableDeck) {
   for (let player of players) {
-    let playerBox = document.getElementsByClassName(`player-${player.number}`);
-    printPlayer(player, playerBox);
+    let playerElement = document.getElementsByClassName(
+      `player-${player.number}`
+    );
+    printPlayer(player, playerElement);
   }
-  let deckBox = document.createElement("div");
-  deckBox.classList.add("table-deck");
-  deckBox.innerText = tableDeck.length;
-  document.body.append(deckBox);
+  let deckElement = document.createElement("div");
+  deckElement.classList.add("table-deck");
+  deckElement.innerText = tableDeck.length;
+  document.body.append(deckElement);
+}
+function printCard(card) {
+  let cardElement = document.createElement("div");
+  cardElement.classList.add("card");
+  let cardImgPath;
+  if (card.isJoker === true) {
+    cardImgPath = `frontEnd\styles\cards\joker.jpg`;
+  } else {
+    cardImgPath = `frontEnd/styles/cards/${card.rank}${card.suit}.jpg`;
+  }
+  let imgElement = document.createElement("img");
+  imgElement.src = cardImgPath;
+
+  cardElement.append(imgElement);
+
+  return cardElement;
 }
