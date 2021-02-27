@@ -1,0 +1,46 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+body {
+  background: url("https://media.istockphoto.com/photos/brown-wood-texture-dark-wooden-abstract-background-picture-id1137996207?k=6&m=1137996207&s=612x612&w=0&h=Eli8yvjTkBpkkT7QZj_hd2wbdKojeNHcxmo209SN1MM=")
+    no-repeat center center fixed;
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.box {
+  border: 5px solid black;
+}
+.board {
+  position: relative;
+  justify-content: center;
+}
+.main-player {
+  position: absolute;
+
+  margin: auto;
+  bottom: 0;
+  right: 47vw;
+}
+
+.player-2 {
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+.player-3 {
+  position: absolute;
+  top: 50%;
+
+  left: 0;
+}
+.player-4 {
+  position: absolute;
+  top: 0px;
+  right: 47vw;
+}
