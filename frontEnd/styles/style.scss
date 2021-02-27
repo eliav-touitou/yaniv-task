@@ -27,6 +27,12 @@ body {
   bottom: 0;
   right: 47vw;
 }
+.game-board {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
 .player-2 {
   position: absolute;
