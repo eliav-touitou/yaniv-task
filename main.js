@@ -1,4 +1,5 @@
-const d = new Deck();
+const d = new PlayersDeck()
+let tableDeck = new Deck(); tableDeck.createCardsDeck();
 d.createCardsDeck();
 let players = [
   new Player("avi", 1, d, 0),
@@ -10,5 +11,6 @@ console.log(d);
 console.log(players[0]);
 
 window.addEventListener("DOMContentLoaded", () => {
-  printGame(players);
+  printGame(players,tableDeck);
+
 });

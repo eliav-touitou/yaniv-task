@@ -14,7 +14,7 @@ class Card {
     } else if (this.rank === "A") {
       this.value = 1;
     } else {
-      this.value === 10;
+      this.value = 10;
     }
     if (this.suit === "♣" || this.suit === "♠") {
       this.color = "black";
@@ -37,7 +37,7 @@ class Player {
   }
   calcHandScore() {
     let points = 0;
-    for (card of this.deck.cards) {
+    for (let card of this.deck.cards) {
       points += card.value;
     }
     return points;
@@ -84,19 +84,19 @@ class Deck {
   useCard() {
     return this.cards.shift();
   }
-  pull5Cards(player) {
-    for(let i = 0; i<5; i++) {
-     player.addCard(this.useCard());
-    }
-  }
+  
 }
 
 //PlayersDeck
-class playersDeck extends Deck {
+class PlayersDeck extends Deck {
   constructor() {
     super();
   }
-  
+  pull5Cards() {
+    for(let i = 0; i<5; i++) {
+    this.addCard(this.useCard());
+    }
+  }
   // startPlayerCards(players, deck) {
   //   for (let player of players) {
   //     player.deck = [];
@@ -147,7 +147,7 @@ function printGame(players, tableDeck) {
   let board = document.querySelector(".board");
   board.append(tablePileElement);
 
-  for (let card of tableDeck) {
+  for (let card of tableDeck.cards) {
     tablePileElement.append(printCard(card));
   }
 }
