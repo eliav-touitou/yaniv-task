@@ -42,10 +42,12 @@ class Player {
     }
     return points;
   }
-  pick1Card(deck) {
-    this.cards.push(deck.cards.pop());
-    deck.cards.shift();
+  pullCard(Deck) {
+    const card = Deck.useCard();
+    this.addCard(card);
   }
+
+  
 }
 
 //Deck
@@ -82,6 +84,11 @@ class Deck {
   useCard() {
     return this.cards.shift();
   }
+  pull5Cards(player) {
+    for(let i = 0; i<5; i++) {
+     player.addCard(this.useCard());
+    }
+  }
 }
 
 //PlayersDeck
@@ -89,6 +96,15 @@ class playersDeck extends Deck {
   constructor() {
     super();
   }
+  
+  // startPlayerCards(players, deck) {
+  //   for (let player of players) {
+  //     player.deck = [];
+  //     for (let i = 0; i < 5; i++) {
+  //       player.deck.push(deck.pop());
+  //     }
+  //   }
+  // }
 }
 
 //TableDeck
