@@ -20,7 +20,7 @@ body {
   position: relative;
   justify-content: center;
 }
-.main-player {
+#main-player {
   position: absolute;
 
   margin: auto;
@@ -33,20 +33,23 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-.player-2 {
+#player-2 {
   position: absolute;
   top: 50%;
   right: 0;
 }
-.player-3 {
+#player-3 {
   position: absolute;
   top: 50%;
 
   left: 0;
 }
-.player-4 {
+#player-4 {
   position: absolute;
   top: 0px;
   right: 47vw;
+}
+img {
+  width: 8%;
+  height: auto;
 }
