@@ -1,18 +1,4 @@
-const ranks = [
-  "A",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "J",
-  "Q",
-  "K",
-];
+const ranks = ["A", 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K"];
 const suits = ["♠", "♣", "♥", "♦"];
 
 //Card
@@ -21,6 +7,20 @@ class Card {
     this.rank = rank;
     this.suit = suit;
     this.isJoker = isJoker;
+    if (this.isJoker === true) {
+      this.value = 0;
+    } else if (this.rank <= 10) {
+      this.value = this.rank;
+    } else if (this.rank === "A") {
+      this.value = 1;
+    } else {
+      this.value === 10;
+    }
+    if (this.suit === "♣" || this.suit === "♠") {
+      this.color = "black";
+    } else {
+      this.color = "red";
+    }
   }
   getName() {
     return `${this.rank} ${this.suit}`;
@@ -36,19 +36,14 @@ class Player {
     this.score = score;
   }
   calcHandScore() {
-    for (cards of deck) {
-      if (card.value === "joker") {
-        score += 0;
-      } else if (card.value <= 10) {
-        score += card.value;
-      } else {
-        score += 10;
-      }
+    let points = 0;
+    for (card of this.deck.cards) {
+      points += card.value;
     }
-    return score;
+    return points;
   }
   pick1Card(deck) {
-    this.cards.push(this.pickCard(deck));
+    this.cards.push(deck.cards.pop());
     deck.cards.shift();
   }
 }
@@ -58,21 +53,19 @@ class Deck {
   constructor(cards = []) {
     this.cards = cards;
   }
-  pickCard() {
-    return deck.cards[0];
-  }
+
   createCardsDeck() {
     for (let i = 0; i < suits.length; i++) {
       for (let x = 0; x < ranks.length; x++) {
         if (x < 10) {
-          this.cards.push(new Card(ranks[x], x + 1, suits[i]));
+          this.cards.push(new Card(ranks[x], suits[i]));
         } else {
-          this.cards.push(new Card(ranks[x], 10, suits[i]));
+          this.cards.push(new Card(ranks[x], suits[i]));
         }
       }
     }
-    this.cards.push(new Card(null, 0, null, true));
-    this.cards.push(new Card(null, 0, null, true));
+    this.cards.push(new Card(null, null, true));
+    this.cards.push(new Card(null, null, true));
   }
 
   randomCards() {
@@ -95,18 +88,6 @@ class Deck {
 class playersDeck extends Deck {
   constructor() {
     super();
-  }
-
-  deal1Card(deck) {
-    this.cards.push(this.pickCard(deck));
-    deck.cards.shift();
-  }
-
-  deal5Cards(deck) {
-    for (let i = 0; i < 5; i++) {
-      this.cards.push(this.pickCard(deck));
-      deck.cards.shift();
-    }
   }
 }
 
@@ -141,7 +122,8 @@ class PileDeck extends Deck {
 
 function printGame(players, tableDeck) {
   for (let player of players) {
-    let playerElement = document.querySelector(`.player-${player.number}`);
+    let playerElement = document.getElementById(`player${player.number}`);
+    console.log(`#player${player.number}`);
     printPlayer(player, playerElement);
   }
   let tablePileElement = document.createElement("div");
@@ -157,8 +139,8 @@ function printCard(card) {
   let cardElement = document.createElement("div");
   cardElement.classList.add("card");
   let cardImgPath;
-  if (card.isJoker === true) {
-    cardImgPath = `frontEnd\styles\cards\joker.jpg`;
+  if (card.isJoker) {
+    cardImgPath = `frontEnd/styles/cards/joker.jpg`;
   } else {
     cardImgPath = `frontEnd/styles/cards/${card.rank}${card.suit}.jpg`;
   }
@@ -170,7 +152,7 @@ function printCard(card) {
   return cardElement;
 }
 function printPlayer(player, playerElement) {
-  for (let card of player.deck) {
+  for (let card of player.deck.cards) {
     playerElement.append(printCard(card));
   }
   let pointsElement = document.createElement("div");
@@ -178,3 +160,17 @@ function printPlayer(player, playerElement) {
   pointsElement.innerText = player.calcHandScore();
   playerElement.append(pointsElement);
 }
+
+// function legalMove(playersDeck) {
+//   let legalCards = false;
+
+//   if (playersDeck[i].value === playersDeck[j].value) {
+//     legalCards = true;
+//   } else if (
+//     playersDeck[i].value === playersDeck[j].value - 1 &&
+//     playersDeck[i].value === playersDeck[x].value + 1 &&
+//     playersDeck[i].suit === playersDeck[j].suit && playersDeck[i].suit === playersDeck[x].suit
+//   ) {
+//     legalCards = true;
+//   }
+// }
