@@ -19,11 +19,26 @@ body {
 }
 
 .game-board {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   position: fixed;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+}
+
+.game-board .card {
+  width: 10%;
+  height: auto;
 }
 
 #player1 {
@@ -97,7 +112,7 @@ body {
 }
 
 img {
-  width: 8%;
+  width: 30%;
   height: auto;
 }
 /*# sourceMappingURL=style.css.map */

@@ -1,5 +1,6 @@
 let tableDeck = new Deck();
 tableDeck.createCardsDeck();
+tableDeck.randomCards();
 const a = new PlayersDeck();
 a.pull5cards(tableDeck);
 const b = new PlayersDeck();
