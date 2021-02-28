@@ -137,6 +137,16 @@ function printGame(players, tableDeck, tablePile) {
   let tableDeckElement = document.createElement("div");
   tableDeckElement.classList.add("table-deck");
   let board = document.querySelector(".game-board");
+
+  board.append(tablePileElement);
+  board.append(tableDeckElement);
+
+  for (let card of tableDeck.cards) {
+    tableDeckElement.append(printCard(card));
+  }
+  for (let card of tablePile.cards) {
+    tablePileElement.append(printCard(card));
+  }
 }
 
 function printCard(card) {
