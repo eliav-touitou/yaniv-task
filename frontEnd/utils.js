@@ -70,13 +70,15 @@ class Deck {
   }
 
   randomCards() {
-    for (let i = 0; i > this.cards.length; i++) {
-      let random = Math.floor(Math.random() * i);
-      let tmp = this.cards[location1];
-      this.cards[i] = this.cards[random];
-      this.cards[random] = tmp;
+    for (let i = 0; i < 10; i++) {
+      for (let card in this.cards) {
+        let randomCardPosition = Math.floor(Math.random() * this.cards.length);
+        this.cards.push(this.cards[randomCardPosition]);
+        this.cards.splice(randomCardPosition, 1);
+      }
     }
   }
+
   addCard(...card) {
     this.cards.push(...card);
   }
@@ -106,14 +108,14 @@ class TableDeck extends Deck {
   constructor() {
     super();
   }
-  takeFromPile(pileDeck, cardLocation) {
-    let set = pileDeck.usePile();
-    let setLast = Math.abs(set.length - 1 - cardLocation);
-    if (set.length > 1) {
-      this.addCard(set[cardLocation]);
-      pileDeck.addPile(set[setLast]);
-    }
-  }
+  // takeFromPile(pileDeck, cardLocation) {
+  //   let set = pileDeck.usePile();
+  //   let setLast = Math.abs(set.length - 1 - cardLocation);
+  //   if (set.length > 1) {
+  //     this.addCard(set[cardLocation]);
+  //     pileDeck.addPile(set[setLast]);
+  //   }
+  // }
 }
 
 //PileDeck
@@ -130,18 +132,25 @@ class PileDeck extends Deck {
   }
 }
 
-function printGame(players, tableDeck) {
+function printGame(players, tableDeck, tablePile) {
   for (let player of players) {
     let playerElement = document.getElementById(`player${player.number}`);
-    console.log(`#player${player.number}`);
+
     printPlayer(player, playerElement);
   }
   let tablePileElement = document.createElement("div");
   tablePileElement.classList.add("table-pile");
+  let tableDeckElement = document.createElement("div");
+  tableDeckElement.classList.add("table-deck");
   let board = document.querySelector(".game-board");
+
   board.append(tablePileElement);
+  board.append(tableDeckElement);
 
   for (let card of tableDeck.cards) {
+    tableDeckElement.append(printCard(card));
+  }
+  for (let card of tablePile.cards) {
     tablePileElement.append(printCard(card));
   }
 }
