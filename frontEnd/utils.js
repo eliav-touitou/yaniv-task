@@ -37,6 +37,10 @@ class Player {
   }
   calcHandScore() {
     let points = 0;
+<<<<<<< HEAD
+=======
+    console.log(this.deck.cards);
+>>>>>>> eliav's-branch
     for (let card of this.deck.cards) {
       points += card.value;
     }
@@ -78,6 +82,10 @@ class Deck {
         this.cards.splice(randomCardPosition, 1);
       }
     }
+<<<<<<< HEAD
+=======
+  }
+>>>>>>> eliav's-branch
 
   addCard(...card) {
     this.cards.push(...card);
@@ -85,9 +93,15 @@ class Deck {
   useCard() {
     return this.cards.shift();
   }
+<<<<<<< HEAD
   firstCard(deck) {
 		return deck.cards[0];
 	}
+=======
+  getFirstCard(deck) {
+    return deck.cards[0];
+  }
+>>>>>>> eliav's-branch
 }
 
 //PlayersDeck
@@ -95,6 +109,7 @@ class PlayersDeck extends Deck {
   constructor() {
     super();
   }
+<<<<<<< HEAD
   
   
   pull1cardFromDeck(deck) {
@@ -116,6 +131,14 @@ class PlayersDeck extends Deck {
   //     }
   //   }
   // }
+=======
+  pull5cards(deck) {
+    for (let i = 0; i < 5; i++) {
+      this.cards.push(this.getFirstCard(deck));
+      deck.cards.shift();
+    }
+  }
+>>>>>>> eliav's-branch
 }
 
 //TableDeck
@@ -123,14 +146,14 @@ class TableDeck extends Deck {
   constructor() {
     super();
   }
-  takeFromPile(pileDeck, cardLocation) {
-    let set = pileDeck.usePile();
-    let setLast = Math.abs(set.length - 1 - cardLocation);
-    if (set.length > 1) {
-      this.addCard(set[cardLocation]);
-      pileDeck.addPile(set[setLast]);
-    }
-  }
+  // takeFromPile(pileDeck, cardLocation) {
+  //   let set = pileDeck.usePile();
+  //   let setLast = Math.abs(set.length - 1 - cardLocation);
+  //   if (set.length > 1) {
+  //     this.addCard(set[cardLocation]);
+  //     pileDeck.addPile(set[setLast]);
+  //   }
+  // }
 }
 
 //PileDeck

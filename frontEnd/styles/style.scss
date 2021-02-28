@@ -18,38 +18,60 @@ body {
 }
 .board {
   position: relative;
-  justify-content: center;
 }
-#main-player {
-  position: absolute;
 
-  margin: auto;
-  bottom: 0;
-  right: 47vw;
-}
 .game-board {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  .card {
+    width: 10%;
+    height: auto;
+  }
 }
-#player-2 {
-  position: absolute;
-  top: 50%;
-  right: 0;
+#player1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  width: 50vw;
+  height: 10vh;
+  left: 25vw;
 }
-#player-3 {
-  position: absolute;
-  top: 50%;
-
+#player2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 50vw;
+  height: 10vh;
+  right: 25vw;
+}
+#player3 {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 10vw;
   left: 0;
 }
-#player-4 {
-  position: absolute;
-  top: 0px;
-  right: 47vw;
+#player4 {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 10vw;
+  right: 0;
 }
 img {
-  width: 8%;
+  width: 30%;
   height: auto;
 }
