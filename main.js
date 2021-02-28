@@ -1,13 +1,15 @@
-const d = new PlayersDeck()
-let tableDeck = new Deck(); tableDeck.createCardsDeck();
-d.createCardsDeck();
-let players = [
-  new Player("avi", 1, d, 0),
-  new Player("avia", 2, d, 0),
-  new Player("aviad", 3, d, 0),
-  new Player("aviel", 4, d, 0),
-];
-console.log(d);
+let tableDeck = new Deck();
+ tableDeck.createCardsDeck();
+ tableDeck.randomCards();
+
+// d.createCardsDeck();
+
+let players = [];
+for (let i = 0; i<5; i++) {
+  const d = new PlayersDeck();
+  d.pull5cardsFromDeck(tableDeck);
+  players.push(new Player(" ",1, d, 0))
+}
 console.log(players[0]);
 
 window.addEventListener("DOMContentLoaded", () => {

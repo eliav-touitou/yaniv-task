@@ -84,7 +84,9 @@ class Deck {
   useCard() {
     return this.cards.shift();
   }
-  
+  firstCard(deck) {
+		return deck.cards[0];
+	}
 }
 
 //PlayersDeck
@@ -92,11 +94,19 @@ class PlayersDeck extends Deck {
   constructor() {
     super();
   }
-  pull5Cards() {
-    for(let i = 0; i<5; i++) {
-    this.addCard(this.useCard());
-    }
-  }
+  
+  
+  pull1cardFromDeck(deck) {
+		this.cards.push(this.firstCard(deck));
+		this.cards.shift();
+	}
+
+	pull5cardsFromDeck(deck) {
+		for (let i = 0; i < 5; i++) {
+			this.cards.push(this.firstCard(deck));
+			deck.cards.shift();
+		}
+	}
   // startPlayerCards(players, deck) {
   //   for (let player of players) {
   //     player.deck = [];
@@ -136,7 +146,7 @@ class PileDeck extends Deck {
   }
 }
 
-function printGame(players, tableDeck) {
+function printGame(players, tableDeck, pileDeck ) {
   for (let player of players) {
     let playerElement = document.getElementById(`player${player.number}`);
     console.log(`#player${player.number}`);
@@ -147,9 +157,10 @@ function printGame(players, tableDeck) {
   let board = document.querySelector(".board");
   board.append(tablePileElement);
 
-  for (let card of tableDeck.cards) {
+  for (let card of pileDeck) {
     tablePileElement.append(printCard(card));
   }
+
 }
 function printCard(card) {
   let cardElement = document.createElement("div");
@@ -167,6 +178,7 @@ function printCard(card) {
 
   return cardElement;
 }
+
 function printPlayer(player, playerElement) {
   for (let card of player.deck.cards) {
     playerElement.append(printCard(card));
@@ -176,6 +188,7 @@ function printPlayer(player, playerElement) {
   pointsElement.innerText = player.calcHandScore();
   playerElement.append(pointsElement);
 }
+
 
 // function legalMove(playersDeck) {
 //   let legalCards = false;
