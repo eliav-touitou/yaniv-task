@@ -178,6 +178,7 @@ function printPlayer(player, playerElement) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // function legalMove(playersDeck) {
 //   let legalCards = false;
 
@@ -194,3 +195,5 @@ function printPlayer(player, playerElement) {
 =======
 
 >>>>>>> origin/shira's-branch
+=======
+>>>>>>> main
