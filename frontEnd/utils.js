@@ -60,52 +60,8 @@ class Deck {
   get size() {
     return this.#cards.length;
   }
-
-  // createCardsDeck() {
-  //   for (let i = 0; i < suits.length; i++) {
-  //     for (let x = 0; x < ranks.length; x++) {
-  //       if (x < 10) {
-  //         this.cards.push(new Card(ranks[x], suits[i]));
-  //       } else {
-  //         this.cards.push(new Card(ranks[x], suits[i]));
-  //       }
-  //     }
-  //   }
-  //   this.cards.push(new Card(null, null, true));
-  //   this.cards.push(new Card(null, null, true));
-  // }
-
-  // randomCards() {
-  //   for (let i = 0; i < 10; i++) {
-  //     for (let card in this.cards) {
-  //       let randomCardPosition = Math.floor(Math.random() * this.cards.length);
-  //       this.cards.push(this.cards[randomCardPosition]);
-  //       this.cards.splice(randomCardPosition, 1);
-  //     }
-  //   }
-  // }
-
-  // shuffle() {
-  //   this.cards.sort((card1, card2) => Math.random() > 0.5);
-  // }
-
-  // removeTopCard() {
-  //   return this.cards.shift();
-  // }
-
-  // getFirstCard(deck) {
-  //   return deck.cards[0];
-  // }
 }
 
-// const tableDeck = new TableDeck();
-// const cards = []
-// for(let i = 0 ; i<5; i++) {
-//   cards.push(tableDeck.takeFromTop())
-// }
-// const playersDeck = new PlayersDeck(...cards)
-// const player = new Player("tomer",0, playersDeck);
-//PlayersDeck
 class PlayersDeck extends Deck {
   constructor(card1, card2, card3, card4, card5) {
     super([card1, card2, card3, card4, card5]);
@@ -141,6 +97,9 @@ class TableDeck extends Deck {
       throw new Error("Can't take from empty pile!");
     }
     return this.#cards.shift();
+  }
+  shuffle() {
+    this.cards.sort((card1, card2) => Math.random() > 0.5);
   }
 }
 
@@ -208,16 +167,3 @@ function printPlayer(player, playerElement) {
   playerElement.append(pointsElement);
 }
 
-// function legalMove(playersDeck) {
-//   let legalCards = false;
-
-//   if (playersDeck[i].value === playersDeck[j].value) {
-//     legalCards = true;
-//   } else if (
-//     playersDeck[i].value === playersDeck[j].value - 1 &&
-//     playersDeck[i].value === playersDeck[x].value + 1 &&
-//     playersDeck[i].suit === playersDeck[j].suit && playersDeck[i].suit === playersDeck[x].suit
-//   ) {
-//     legalCards = true;
-//   }
-// }
