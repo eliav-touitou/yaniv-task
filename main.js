@@ -16,6 +16,15 @@ let players = [
   new Player("aviel", 4, d, 0),
 ];
 
+// d.createCardsDeck();
+
+// let players = [];
+// for (let i = 0; i < 5; i++) {
+//   const d = new PlayersDeck();
+//   d.pull5cardsFromDeck(tableDeck);
+//   players.push(new Player(" ", i + 1, d, 0));
+// }
+
 document.addEventListener("click", (e) => {
   const cards = document.querySelectorAll(".card");
   //   if (cards.contains(e.target)) {
