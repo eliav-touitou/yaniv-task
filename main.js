@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-
-console.log(players[0]);
-
-=======
->>>>>>> eliav's-branch
 let tableDeck = new Deck();
 tableDeck.createCardsDeck();
 tableDeck.randomCards();
@@ -22,18 +16,6 @@ let players = [
   new Player("aviad", 3, c, 0),
   new Player("aviel", 4, d, 0),
 ];
-<<<<<<< HEAD
-
-// d.createCardsDeck();
-
-// let players = [];
-// for (let i = 0; i < 5; i++) {
-//   const d = new PlayersDeck();
-//   d.pull5cardsFromDeck(tableDeck);
-//   players.push(new Player(" ", i + 1, d, 0));
-// }
-=======
->>>>>>> eliav's-branch
 
 // d.createCardsDeck();
 
@@ -51,11 +33,6 @@ document.addEventListener("click", (e) => {
   //   }
 });
 window.addEventListener("DOMContentLoaded", () => {
-<<<<<<< HEAD
-  printGame(players,tableDeck, tablePile);
-
-=======
   printGame(players, tableDeck);
->>>>>>> eliav's-branch
 });
 console.log(tableDeck.randomCards());

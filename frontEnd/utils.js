@@ -7,138 +7,127 @@ class Card {
     this.rank = rank;
     this.suit = suit;
     this.isJoker = isJoker;
-    if (this.isJoker === true) {
-      this.value = 0;
-    } else if (this.rank <= 10) {
-      this.value = this.rank;
-    } else if (this.rank === "A") {
-      this.value = 1;
-    } else {
-      this.value = 10;
-    }
-    if (this.suit === "♣" || this.suit === "♠") {
-      this.color = "black";
-    } else {
-      this.color = "red";
-    }
   }
-  getName() {
-    return `${this.rank} ${this.suit}`;
+
+  get value() {
+    if (this.isJoker) {
+      return 0;
+    }
+    if (this.rank <= 10) {
+      return this.rank;
+    }
+    if (this.rank === "A") {
+      return 1;
+    }
+    return 10
+  }
+
+  get color() {
+    return (this.suit === "♣" || this.suit === "♠") ? "black" : "red";
+  }
+
+  toString() {
+    return this.isJoker ? "🃏" : `${this.rank} ${this.suit}`;
   }
 }
 
 //Player
 class Player {
-  constructor(name, number, deck, score = 0) {
+  constructor(name, id, playerDeck) {
     this.name = name;
-    this.number = number;
-    this.deck = deck;
-    this.score = score;
+    this.id = id;
+    this.hand = playerDeck;
+    this.score = 0;
   }
-  calcHandScore() {
-    let points = 0;
-<<<<<<< HEAD
-=======
-    console.log(this.deck.cards);
->>>>>>> eliav's-branch
-    for (let card of this.deck.cards) {
-      points += card.value;
-    }
-    return points;
+
+  get currentScore() {
+    return this.hand.calcScore();
   }
+
   pullCard(Deck) {
     const card = Deck.useCard();
     this.addCard(card);
   }
-
-  
 }
 
 //Deck
 class Deck {
+  #cards = [];
   constructor(cards = []) {
-    this.cards = cards;
+    this.#cards = cards;
   }
 
-  createCardsDeck() {
-    for (let i = 0; i < suits.length; i++) {
-      for (let x = 0; x < ranks.length; x++) {
-        if (x < 10) {
-          this.cards.push(new Card(ranks[x], suits[i]));
-        } else {
-          this.cards.push(new Card(ranks[x], suits[i]));
-        }
-      }
-    }
-    this.cards.push(new Card(null, null, true));
-    this.cards.push(new Card(null, null, true));
+  get size() {
+    return this.#cards.length;
   }
 
-  randomCards() {
-    for (let i = 0; i < 10; i++) {
-      for (let card in this.cards) {
-        let randomCardPosition = Math.floor(Math.random() * this.cards.length);
-        this.cards.push(this.cards[randomCardPosition]);
-        this.cards.splice(randomCardPosition, 1);
-      }
-    }
-<<<<<<< HEAD
-=======
-  }
->>>>>>> eliav's-branch
+  // createCardsDeck() {
+  //   for (let i = 0; i < suits.length; i++) {
+  //     for (let x = 0; x < ranks.length; x++) {
+  //       if (x < 10) {
+  //         this.cards.push(new Card(ranks[x], suits[i]));
+  //       } else {
+  //         this.cards.push(new Card(ranks[x], suits[i]));
+  //       }
+  //     }
+  //   }
+  //   this.cards.push(new Card(null, null, true));
+  //   this.cards.push(new Card(null, null, true));
+  // }
 
-  addCard(...card) {
-    this.cards.push(...card);
-  }
-  useCard() {
-    return this.cards.shift();
-  }
-<<<<<<< HEAD
-  firstCard(deck) {
-		return deck.cards[0];
-	}
-=======
-  getFirstCard(deck) {
-    return deck.cards[0];
-  }
->>>>>>> eliav's-branch
-}
-
-//PlayersDeck
-class PlayersDeck extends Deck {
-  constructor() {
-    super();
-  }
-<<<<<<< HEAD
-  
-  
-  pull1cardFromDeck(deck) {
-		this.cards.push(this.firstCard(deck));
-		this.cards.shift();
-	}
-
-	pull5cardsFromDeck(deck) {
-		for (let i = 0; i < 5; i++) {
-			this.cards.push(this.firstCard(deck));
-			deck.cards.shift();
-		}
-	}
-  // startPlayerCards(players, deck) {
-  //   for (let player of players) {
-  //     player.deck = [];
-  //     for (let i = 0; i < 5; i++) {
-  //       player.deck.push(deck.pop());
+  // randomCards() {
+  //   for (let i = 0; i < 10; i++) {
+  //     for (let card in this.cards) {
+  //       let randomCardPosition = Math.floor(Math.random() * this.cards.length);
+  //       this.cards.push(this.cards[randomCardPosition]);
+  //       this.cards.splice(randomCardPosition, 1);
   //     }
   //   }
   // }
-=======
-  pull5cards(deck) {
-    for (let i = 0; i < 5; i++) {
-      this.cards.push(this.getFirstCard(deck));
-      deck.cards.shift();
-    }
+
+  // shuffle() {
+  //   this.cards.sort((card1, card2) => Math.random() > 0.5);
+  // }
+
+  // removeTopCard() {
+  //   return this.cards.shift();
+  // }
+
+  // getFirstCard(deck) {
+  //   return deck.cards[0];
+  // }
+}
+
+// const tableDeck = new TableDeck();
+// const cards = []
+// for(let i = 0 ; i<5; i++) {
+//   cards.push(tableDeck.takeFromTop())
+// }
+// const playersDeck = new PlayersDeck(...cards)
+// const player = new Player("tomer",0, playersDeck);
+//PlayersDeck
+class PlayersDeck extends Deck {
+  constructor(card1, card2, card3, card4, card5) {
+    super([card1, card2, card3, card4, card5]);
   }
->>>>>>> eliav's-branch
+  removeCard(cardToRemove) {
+    for(let i = 0; i < this.cards.length ; i++) {
+      let card = this.cards[i];
+      if (card === cardToRemove) { // might need to use card.toString
+        this.cards.splice(i,1);
+        return cardToRemove;
+      }
+    }
+    throw new Error("Player doesnt have card: " + cardToRemove);
+  }
+
+  add(card) {
+    this.#cards.push(card);
+  }
+
+  calcScore() {
+    return this.#cards.reduce((prevScore,card) => prevScore + card.value, 0);
+  }
 }
 
 //TableDeck
@@ -146,27 +135,35 @@ class TableDeck extends Deck {
   constructor() {
     super();
   }
-  // takeFromPile(pileDeck, cardLocation) {
-  //   let set = pileDeck.usePile();
-  //   let setLast = Math.abs(set.length - 1 - cardLocation);
-  //   if (set.length > 1) {
-  //     this.addCard(set[cardLocation]);
-  //     pileDeck.addPile(set[setLast]);
-  //   }
-  // }
+  takeFromTop() {
+    if(this.size() === 0) {
+      throw new Error("Can't take from empty pile!");
+    }
+    return this.#cards.shift()
+  }
 }
 
 //PileDeck
 class PileDeck extends Deck {
+  revealed = [];
   constructor() {
     super();
-    this.pile = [];
   }
-  addPile(set) {
-    this.pile.unshift(set);
+
+  takeFromPile() {
+    if(this.size() === 0) {
+      throw new Error("Can't take from empty pile!");
+    }
+    return this.#cards.shift();
   }
-  usePile() {
-    return this.pile.shift();
+
+  putInPile(cards) {
+    if (cards.length === 0) {
+      throw new Error("Can't put 0 cards in deck");
+    }
+    this.revealed = cards;
+    cards.forEach(card => this.#cards.unshift(card));
+    return cards;
   }
 }
 
@@ -181,16 +178,6 @@ function printGame(players, tableDeck, tablePile) {
   let tableDeckElement = document.createElement("div");
   tableDeckElement.classList.add("table-deck");
   let board = document.querySelector(".game-board");
-
-  board.append(tablePileElement);
-  board.append(tableDeckElement);
-
-  for (let card of tableDeck.cards) {
-    tableDeckElement.append(printCard(card));
-  }
-  for (let card of tablePile.cards) {
-    tablePileElement.append(printCard(card));
-  }
 }
 
 function printCard(card) {
