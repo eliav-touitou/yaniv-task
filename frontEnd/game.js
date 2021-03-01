@@ -2,30 +2,42 @@ class Game {
   players;
   playerPlayingId = null;
 
-  constructor(namefPlayers, tableDeck, pileDeck) {
+  constructor(playerNames, tableDeck) {
+    if (tableDeck) {
+      this.tableDeck = tableDeck;
+    } else {
+      this.tableDeck = new TableDeck();
+    }
+
+    this.pileDeck = new PileDeck();
+    this.pileDeck.transferCardFromTop(this.tableDeck);
+
     this.players = [];
-    this.tableDeck = tableDeck;
-    this.pileDeck = pileDeck;
+
+    let count = 0;
+    for (let i = 0; i < playerNames.length; i++) {
+      this.players.push(new Player(playerNames[i], ++count));
+      console.log(this.players[i]);
+      this.players[i].hand.pull5cards(this.tableDeck);
+    }
+
     this.turn = 0;
   }
 
   // cardClicked(player, card) {
   //     if player.id === this.playerPlayingId
   // }
-  addPlayer(player) {
-    this.players.push(player);
-  }
+
   dealCards(tableDeck) {
     this.players.forEach((player) => {
-      for (let i = 0; i < 5; i++) {
-        player.hand.add(tableDeck.takeFromTop());
-      }
+      for (let i = 0; i < 5; i++) {}
     });
   }
   newRound() {
     this.players.forEach((player) => (player.hand.cards.length = 0));
     this.pileDeck.cards.length = 0;
-    this.tableDeck.cards = new Deck();
+    this.tableDeck = new TableDeck();
+    this.tableDeck.shuffle();
   }
 }
 
@@ -66,37 +78,24 @@ function choseLegalCards(chosenCards) {
   } else {
     for (let card of chosenCards) {
       if (card.rank === chosenCards[0].rank) {
-        return true;
+        return false;
       }
     }
-
-    for (let card of arr) {
-    }
   }
-
-  //מסדר לפי סדר סדר עולה
-  arr = [1, 2, 3, 6];
-  arr.sort(function (a, b) {
-    return a - b;
-  });
-  // קלפים לפי סדר עולה
-  const x = arr.slice(1).map(function (n, i) {
-    return n - arr[i];
-  });
-  const isDifference = x.every((value) => value == 1);
-  console.log(isDifference);
-
-  // if(arr === !isDifference) {
-  //     for(let card of arr) {
-
-  //             return arr = true;
-  //         }
-  //     }
-  //     console.log(arr);
-  // }else if{
-  //     throw Error("cant do this move!");
-  // }
 }
+
+chosenCard = [2, 1, 7, 5];
+chosenCard.sort((a, b) => {
+  return a - b;
+});
+const chosenCardsDifferences = chosenCard.slice(1).map(function (value, i) {
+  return value - chosenCard[i];
+});
+const isDifference =
+  chosenCardsDifferences.every((value) => value === 1) ||
+  chosenCardsDifferences.every((value) => value === 0);
+console.log(isDifference);
+
 function arrayPyramid(arr) {
   let count = 0;
   return arr.reduce((prev, val) => {
@@ -109,7 +108,7 @@ console.log(arrayPyramid([10, "j", "Q", "K"]));
 //  [[[[10]"J"]"Q"]"K"]
 
 function throwLegalCards(cards) {
-  playerInTurn.playersDeck.removeCard(chosenCards);
+  playerInTurn.playerDeck.removeCard(chosenCards);
   game.pileDeck.putInPile(chosenCards);
 }
 
