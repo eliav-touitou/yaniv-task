@@ -173,7 +173,7 @@ function printPlayer(player, playerElement) {
   }
   let pointsElement = document.createElement("div");
   pointsElement.className = "player-points";
-  pointsElement.innerText = player.calcHandScore();
+  pointsElement.innerText = player.calcScore();
   playerElement.append(pointsElement);
 }
 

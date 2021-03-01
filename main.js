@@ -16,6 +16,8 @@
 //   new Player("aviad", 3, c, 0),
 //   new Player("aviel", 4, d, 0),
 // ];
+// const player1 = new Player();
+// this.players.push(player1);
 
  const tableDeck = new TableDeck();
  const cards = []
