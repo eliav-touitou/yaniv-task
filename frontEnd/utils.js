@@ -7,6 +7,7 @@ class Card {
     this.rank = rank;
     this.suit = suit;
     this.isJoker = isJoker;
+    this.faceDown = true;
   }
 
   get value() {
@@ -19,15 +20,14 @@ class Card {
     if (this.rank === "A") {
       return 1;
     }
-    return 10
-  }
-
-  get color() {
-    return (this.suit === "♣" || this.suit === "♠") ? "black" : "red";
+    return 10;
   }
 
   toString() {
     return this.isJoker ? "🃏" : `${this.rank} ${this.suit}`;
+  }
+  flip() {
+    this.faceDown ? (this.faceDown = false) : (this.faceDown = true);
   }
 }
 
@@ -67,10 +67,11 @@ class PlayersDeck extends Deck {
     super([card1, card2, card3, card4, card5]);
   }
   removeCard(cardToRemove) {
-    for(let i = 0; i < this.cards.length ; i++) {
+    for (let i = 0; i < this.cards.length; i++) {
       let card = this.cards[i];
-      if (card === cardToRemove) { // might need to use card.toString
-        this.cards.splice(i,1);
+      if (card === cardToRemove) {
+        // might need to use card.toString
+        this.cards.splice(i, 1);
         return cardToRemove;
       }
     }
@@ -82,7 +83,7 @@ class PlayersDeck extends Deck {
   }
 
   calcScore() {
-    return this.#cards.reduce((prevScore,card) => prevScore + card.value, 0);
+    return this.#cards.reduce((prevScore, card) => prevScore + card.value, 0);
   }
 }
 
@@ -92,10 +93,10 @@ class TableDeck extends Deck {
     super();
   }
   takeFromTop() {
-    if(this.size() === 0) {
+    if (this.size() === 0) {
       throw new Error("Can't take from empty pile!");
     }
-    return this.#cards.shift()
+    return this.#cards.shift();
   }
   shuffle() {
     this.cards.sort((card1, card2) => Math.random() > 0.5);
@@ -110,7 +111,7 @@ class PileDeck extends Deck {
   }
 
   takeFromPile() {
-    if(this.size() === 0) {
+    if (this.size() === 0) {
       throw new Error("Can't take from empty pile!");
     }
     return this.#cards.shift();
@@ -121,7 +122,7 @@ class PileDeck extends Deck {
       throw new Error("Can't put 0 cards in deck");
     }
     this.revealed = cards;
-    cards.forEach(card => this.#cards.unshift(card));
+    cards.forEach((card) => this.#cards.unshift(card));
     return cards;
   }
 }
@@ -172,8 +173,7 @@ function printPlayer(player, playerElement) {
   }
   let pointsElement = document.createElement("div");
   pointsElement.className = "player-points";
-  pointsElement.innerText = player.calcHandScore();
+  pointsElement.innerText = player.calcScore();
   playerElement.append(pointsElement);
 }
-
 
