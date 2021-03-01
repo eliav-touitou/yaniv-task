@@ -8,6 +8,24 @@ class Card {
     this.suit = suit;
     this.isJoker = isJoker;
     this.faceDown = true;
+
+    switch (rank) {
+      case "A":
+        this.rankIndex = 1;
+        break;
+      case "J":
+        this.rankIndex = 11;
+        break;
+      case "Q":
+        this.rankIndex = 12;
+        break;
+      case "K":
+        this.rankIndex = 13;
+        break;
+      default:
+        this.rankIndex = this.rank;
+        break;
+    }
   }
 
   get value() {
@@ -33,10 +51,11 @@ class Card {
 
 //Player
 class Player {
-  constructor(name, id, playerDeck) {
+  constructor(name, id) {
     this.name = name;
     this.id = id;
-    this.hand = playerDeck;
+    this.hand = new PlayerDeck();
+    console.log("asd");
     this.score = 0;
   }
 
@@ -52,38 +71,42 @@ class Player {
 
 //Deck
 class Deck {
-  cards = [];
   constructor(cards = []) {
     this.cards = cards;
   }
+
   createNewFullDeck() {
     for (let j = 0; j < ranks.length; j++) {
-		for (let i = 0; i < suits.length; i++) {
-				this.cards.push(new Card( ranks[j],suits[i], false));
-			}
-		}
-		this.cards.push(new Card(null, null, true));
-		this.cards.push(new Card(null, null, true));
-	}
-  
+      for (let i = 0; i < suits.length; i++) {
+        this.cards.push(new Card(ranks[j], suits[i], false));
+      }
+    }
+    this.cards.push(new Card(null, null, true));
+    this.cards.push(new Card(null, null, true));
+  }
+
   size() {
     return this.cards.length;
   }
-  takeFromTop(deck) {
-    return deck.cards[0];
+  // takeFromTop(deck) {
+  //   return deck.cards[0];
+  // }
+
+  transferCardFromTop(deckToTransferFrom) {
+    this.cards.push(deckToTransferFrom.cards.pop());
   }
 }
 
-class PlayersDeck extends Deck {
+class PlayerDeck extends Deck {
   constructor() {
     super();
   }
   pull5cards(deck) {
-		for (let i = 0; i < 5; i++) {
-			this.cards.push(this.takeFromTop(deck));
-			deck.cards.shift();
-		}
-	}
+    for (let i = 0; i < 5; i++) {
+      this.cards.push(this.transferCardFromTop(deck));
+      // deck.cards.shift();
+    }
+  }
   removeCard(cardToRemove) {
     for (let i = 0; i < this.cards.length; i++) {
       let card = this.cards[i];
@@ -109,8 +132,8 @@ class PlayersDeck extends Deck {
 class TableDeck extends Deck {
   constructor() {
     super();
+    this.createNewFullDeck();
   }
-  
 
   takeFromTop() {
     if (this.size() === 0) {
@@ -148,7 +171,6 @@ class PileDeck extends Deck {
 }
 
 function printGame(players, tableDeck) {
-  debugger;
   for (let player of players) {
     let playerElement = document.getElementById(`player${player.id}`);
     printPlayer(player, playerElement);
@@ -168,7 +190,6 @@ function printGame(players, tableDeck) {
 }
 
 function printCard(card) {
-
   let cardElement = document.createElement("div");
   cardElement.classList.add("card");
   let cardImgPath;
@@ -194,4 +215,3 @@ function printPlayer(player, playerElement) {
   pointsElement.innerText = player.hand.calcScore();
   playerElement.append(pointsElement);
 }
-
