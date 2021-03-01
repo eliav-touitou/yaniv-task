@@ -52,20 +52,38 @@ class Player {
 
 //Deck
 class Deck {
-  #cards = [];
+  cards = [];
   constructor(cards = []) {
-    this.#cards = cards;
+    this.cards = cards;
   }
-
-  get size() {
-    return this.#cards.length;
+  createNewFullDeck() {
+    for (let j = 0; j < ranks.length; j++) {
+		for (let i = 0; i < suits.length; i++) {
+				this.cards.push(new Card( ranks[j],suits[i], false));
+			}
+		}
+		this.cards.push(new Card(null, null, true));
+		this.cards.push(new Card(null, null, true));
+	}
+  
+  size() {
+    return this.cards.length;
+  }
+  takeFromTop(deck) {
+    return deck.cards[0];
   }
 }
 
 class PlayersDeck extends Deck {
-  constructor(card1, card2, card3, card4, card5) {
-    super([card1, card2, card3, card4, card5]);
+  constructor() {
+    super();
   }
+  pull5cards(deck) {
+		for (let i = 0; i < 5; i++) {
+			this.cards.push(this.takeFromTop(deck));
+			deck.cards.shift();
+		}
+	}
   removeCard(cardToRemove) {
     for (let i = 0; i < this.cards.length; i++) {
       let card = this.cards[i];
@@ -79,11 +97,11 @@ class PlayersDeck extends Deck {
   }
 
   add(card) {
-    this.#cards.push(card);
+    this.cards.push(card);
   }
 
   calcScore() {
-    return this.#cards.reduce((prevScore, card) => prevScore + card.value, 0);
+    return this.cards.reduce((prevScore, card) => prevScore + card.value, 0);
   }
 }
 
@@ -92,14 +110,16 @@ class TableDeck extends Deck {
   constructor() {
     super();
   }
+  
+
   takeFromTop() {
     if (this.size() === 0) {
       throw new Error("Can't take from empty pile!");
     }
-    return this.#cards.shift();
+    return this.cards.shift();
   }
   shuffle() {
-    this.cards.sort((card1, card2) => Math.random() > 0.5);
+    this.cards.sort(() => Math.random() > 0.5);
   }
 }
 
@@ -114,23 +134,23 @@ class PileDeck extends Deck {
     if (this.size() === 0) {
       throw new Error("Can't take from empty pile!");
     }
-    return this.#cards.shift();
+    return this.cards.shift();
   }
 
   putInPile(cards) {
     if (cards.length === 0) {
-      throw new Error("Can't put 0 cards in deck");
+      throw new Error("Can't put 0 cards in pile");
     }
     this.revealed = cards;
-    cards.forEach((card) => this.#cards.unshift(card));
+    cards.forEach((card) => this.cards.unshift(card));
     return cards;
   }
 }
 
-function printGame(players, tableDeck, tablePile) {
+function printGame(players, tableDeck) {
+  debugger;
   for (let player of players) {
-    let playerElement = document.getElementById(`player${player.number}`);
-
+    let playerElement = document.getElementById(`player${player.id}`);
     printPlayer(player, playerElement);
   }
   let tablePileElement = document.createElement("div");
@@ -145,12 +165,10 @@ function printGame(players, tableDeck, tablePile) {
   for (let card of tableDeck.cards) {
     tableDeckElement.append(printCard(card));
   }
-  for (let card of tablePile.cards) {
-    tablePileElement.append(printCard(card));
-  }
 }
 
 function printCard(card) {
+
   let cardElement = document.createElement("div");
   cardElement.classList.add("card");
   let cardImgPath;
@@ -168,12 +186,12 @@ function printCard(card) {
 }
 
 function printPlayer(player, playerElement) {
-  for (let card of player.deck.cards) {
+  for (let card of player.hand.cards) {
     playerElement.append(printCard(card));
   }
   let pointsElement = document.createElement("div");
   pointsElement.className = "player-points";
-  pointsElement.innerText = player.calcScore();
+  pointsElement.innerText = player.hand.calcScore();
   playerElement.append(pointsElement);
 }
 
