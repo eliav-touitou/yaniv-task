@@ -58,14 +58,14 @@ class Deck {
   }
   createNewFullDeck() {
     for (let j = 0; j < ranks.length; j++) {
-		for (let i = 0; i < suits.length; i++) {
-				this.cards.push(new Card( ranks[j],suits[i], false));
-			}
-		}
-		this.cards.push(new Card(null, null, true));
-		this.cards.push(new Card(null, null, true));
-	}
-  
+      for (let i = 0; i < suits.length; i++) {
+        this.cards.push(new Card(ranks[j], suits[i], false));
+      }
+    }
+    this.cards.push(new Card(null, null, true));
+    this.cards.push(new Card(null, null, true));
+  }
+
   size() {
     return this.cards.length;
   }
@@ -79,11 +79,11 @@ class PlayersDeck extends Deck {
     super();
   }
   pull5cards(deck) {
-		for (let i = 0; i < 5; i++) {
-			this.cards.push(this.takeFromTop(deck));
-			deck.cards.shift();
-		}
-	}
+    for (let i = 0; i < 5; i++) {
+      this.cards.push(this.takeFromTop(deck));
+      deck.cards.shift();
+    }
+  }
   removeCard(cardToRemove) {
     for (let i = 0; i < this.cards.length; i++) {
       let card = this.cards[i];
@@ -110,7 +110,6 @@ class TableDeck extends Deck {
   constructor() {
     super();
   }
-  
 
   takeFromTop() {
     if (this.size() === 0) {
@@ -120,6 +119,13 @@ class TableDeck extends Deck {
   }
   shuffle() {
     this.cards.sort(() => Math.random() > 0.5);
+    //   for (let i; i < 15; i++) {
+    //     for (let card in this.cards) {
+    //       let randomCardPosition = Math.floor(Math.random() * this.cards.length);
+    //       this.cards.push(this.cards[randomCardPosition]);
+    //       this.cards.splice(randomCardPosition, 1);
+    //     }
+    //   }
   }
 }
 
@@ -168,7 +174,6 @@ function printGame(players, tableDeck) {
 }
 
 function printCard(card) {
-
   let cardElement = document.createElement("div");
   cardElement.classList.add("card");
   let cardImgPath;
@@ -194,4 +199,3 @@ function printPlayer(player, playerElement) {
   pointsElement.innerText = player.hand.calcScore();
   playerElement.append(pointsElement);
 }
-
