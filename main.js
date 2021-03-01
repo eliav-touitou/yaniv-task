@@ -1,8 +1,10 @@
-const playerNames = ["avi", "shlomi", "baruh", "menash"];
-const game1 = new Game(playerNames);
+const players = ["avi", "shlomi", "baruh", "menash"];
+const game1 = new Game(players);
 
-console.log(game1);
-
+const d = new Deck();
+d.createNewFullDeck();
+d.shuffle();
+console.log(d);
 document.addEventListener("click", (e) => {
   const cards = document.querySelectorAll(".card");
   //   if (cards.contains(e.target)) {

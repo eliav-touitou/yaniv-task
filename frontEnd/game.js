@@ -1,12 +1,12 @@
 class Game {
   players;
-  playerPlayingId = null;
 
   constructor(playerNames, tableDeck) {
     if (tableDeck) {
       this.tableDeck = tableDeck;
     } else {
       this.tableDeck = new TableDeck();
+      this.tableDeck.shuffle();
     }
 
     this.pileDeck = new PileDeck();
@@ -28,11 +28,11 @@ class Game {
   //     if player.id === this.playerPlayingId
   // }
 
-  dealCards(tableDeck) {
-    this.players.forEach((player) => {
-      for (let i = 0; i < 5; i++) {}
-    });
-  }
+//   dealCards(tableDeck) {
+//     this.players.forEach((player) => {
+//       for (let i = 0; i < 5; i++) {}
+//     });
+//   }
   newRound() {
     this.players.forEach((player) => (player.hand.cards.length = 0));
     this.pileDeck.cards.length = 0;

@@ -74,6 +74,14 @@ class Deck {
   constructor(cards = []) {
     this.cards = cards;
   }
+  shuffle() {
+    for (let i = this.cards.length - 1; i > 0; i--) {
+      let randomIndex = Math.floor(Math.random() * i);
+      let temp = this.cards[i];
+      this.cards[i] = this.cards[randomIndex];
+      this.cards[randomIndex] = temp;
+    }
+  }
 
   createNewFullDeck() {
     for (let j = 0; j < ranks.length; j++) {
@@ -84,14 +92,9 @@ class Deck {
     this.cards.push(new Card(null, null, true));
     this.cards.push(new Card(null, null, true));
   }
-
   size() {
     return this.cards.length;
   }
-  // takeFromTop(deck) {
-  //   return deck.cards[0];
-  // }
-
   transferCardFromTop(deckToTransferFrom) {
     this.cards.push(deckToTransferFrom.cards.pop());
   }
@@ -103,7 +106,7 @@ class PlayerDeck extends Deck {
   }
   pull5cards(deck) {
     for (let i = 0; i < 5; i++) {
-      this.cards.push(this.transferCardFromTop(deck));
+      this.transferCardFromTop(deck);
       // deck.cards.shift();
     }
   }
@@ -133,17 +136,15 @@ class TableDeck extends Deck {
   constructor() {
     super();
     this.createNewFullDeck();
+    this.shuffle();
   }
 
-  takeFromTop() {
-    if (this.size() === 0) {
-      throw new Error("Can't take from empty pile!");
-    }
-    return this.cards.shift();
-  }
-  shuffle() {
-    this.cards.sort(() => Math.random() > 0.5);
-  }
+  // takeFromTop() {
+  //   if (this.size() === 0) {
+  //     throw new Error("Can't take from empty pile!");
+  //   }
+  //   return this.cards.shift();
+  // }
 }
 
 //PileDeck
